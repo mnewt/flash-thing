@@ -3,9 +3,9 @@
 ;; Author: Matthew Newton
 ;; Maintainer: Matthew Newton
 ;; Version: version
-;; Package-Requires: (dependencies)
+;; Package-Requires: (emacs "24.4")
 ;; Homepage: https://github.com/mnewt/flash-thing
-;; Keywords: keywords
+;; Keywords: highlight
 
 
 ;; This file is not part of GNU Emacs
@@ -108,6 +108,7 @@
       (delete-overlay flash-region-overlay))
     (setq flash-region-overlay nil)))
 
+;;;###autoload
 (defun flash-region (beg end &optional face timeout)
   "Show an overlay from BEG to END using FACE to set display
 properties. The overlay automatically vanishes after TIMEOUT
@@ -124,25 +125,30 @@ seconds."
                            #'flash-region--remove-overlay
                            (current-buffer)))))
 
+;;;###autoload
 (defun flash-last-sexp (&rest _)
   "Flash the S-expression before point."
   (flash-region (point) (save-excursion (backward-sexp) (point))))
 
+;;;###autoload
 (defun flash-last-sexp-other-window (&rest _)
   "Flash the S-expression before point in the other window."
   (save-window-excursion
     (other-window 1)
     (flash-last-sexp nil)))
 
+;;;###autoload
 (defun flash-defun (&rest _)
   "Flash the defun surrounding point."
   (flash-region (save-excursion (beginning-of-defun) (point))
                 (save-excursion (end-of-defun) (point))))
 
+;;;###autoload
 (defun flash-line (&rest _)
   "Flash the line."
   (flash-region (point-at-bol) (point-at-eol)))
 
+;;;###autoload
 (defun flash-buffer (&rest _)
   "Flash the whole buffer."
   (flash-region (point-min) (point-max)))
@@ -168,6 +174,7 @@ seconds."
   "Remove advice from the commands supported by `flash-thing'."
   (mapc #'flash-thing--remove-advice-from-file flash-commands))
 
+;;;###autoload
 (define-minor-mode flash-thing-mode
   "Toggle `flash-thing' on or off.
 
