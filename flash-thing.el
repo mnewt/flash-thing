@@ -161,7 +161,7 @@ seconds."
     (mapc #'flash-thing--add-advice-to-command commands)))
 
 (defun flash-thing--add-advice ()
-  (mapc #'flash-thing--add-advice-to-file flash-commands))
+  (mapc #'flash-thing--add-advice-to-file flash-thing-commands))
 
 (defun* flash-thing--remove-advice-from-command ((command . function))
   (advice-remove command function))
