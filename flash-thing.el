@@ -99,14 +99,14 @@
 
 (defvar flash-thing-region-overlay nil
   "The overlay used for flash.")
-(make-variable-buffer-local 'flash-region-overlay)
+(make-variable-buffer-local 'flash-thing-region-overlay)
 
 (defun flash-thing-region--remove-overlay (buf)
   "Remove the flash overlay if it exists in BUF."
   (with-current-buffer buf
-    (when (overlayp flash-region-overlay)
-      (delete-overlay flash-region-overlay))
-    (setq flash-region-overlay nil)))
+    (when (overlayp flash-thing-region-overlay)
+      (delete-overlay flash-thing-region-overlay))
+    (setq flash-thing-region-overlay nil)))
 
 ;;;###autoload
 (defun flash-region (beg end &optional face timeout)
@@ -116,13 +116,13 @@ seconds."
   (interactive "r")
   (let ((face (or face flash-thing-face))
         (timeout (or (and (numberp timeout) (< 0 timeout) timeout)
-                     flash-timeout)))
-    (flash-region--remove-overlay (current-buffer))
-    (setq flash-region-overlay (make-overlay beg end))
-    (overlay-put flash-region-overlay 'face face)
+                     flash-thing-timeout)))
+    (flash-thing-region--remove-overlay (current-buffer))
+    (setq flash-thing-region-overlay (make-overlay beg end))
+    (overlay-put flash-thing-region-overlay 'face face)
     (when (< 0 timeout)
       (run-with-idle-timer timeout nil
-                           #'flash-region--remove-overlay
+                           #'flash-thing-region--remove-overlay
                            (current-buffer)))))
 
 ;;;###autoload
@@ -176,7 +176,7 @@ seconds."
 
 ;;;###autoload
 (define-minor-mode flash-thing-mode
-  "Toggle `flash-thing' on or off.
+  "Toggle `flash-thing-mode' on or off.
 
 When the mode is on and a sexp is evaluated, `flash-thing' causes
 the sexp to flash briefly."
@@ -189,3 +189,4 @@ the sexp to flash briefly."
 (provide 'flash-thing)
 
 ;;; flash-thing.el ends here
+
