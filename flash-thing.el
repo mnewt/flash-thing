@@ -114,7 +114,7 @@
 properties. The overlay automatically vanishes after TIMEOUT
 seconds."
   (interactive "r")
-  (let ((face (or face flash-face))
+  (let ((face (or face flash-thing-face))
         (timeout (or (and (numberp timeout) (< 0 timeout) timeout)
                      flash-timeout)))
     (flash-region--remove-overlay (current-buffer))
