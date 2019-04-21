@@ -103,10 +103,11 @@
 
 (defun flash-thing-region--remove-overlay (buf)
   "Remove the flash overlay if it exists in BUF."
-  (with-current-buffer buf
-    (when (overlayp flash-thing-region-overlay)
-      (delete-overlay flash-thing-region-overlay))
-    (setq flash-thing-region-overlay nil)))
+  (when (buffer-live-p buf)
+    (with-current-buffer buf
+      (when (overlayp flash-thing-region-overlay)
+        (delete-overlay flash-thing-region-overlay))
+      (setq flash-thing-region-overlay nil))))
 
 ;;;###autoload
 (defun flash-region (beg end &optional face timeout)
@@ -189,4 +190,3 @@ the sexp to flash briefly."
 (provide 'flash-thing)
 
 ;;; flash-thing.el ends here
-
