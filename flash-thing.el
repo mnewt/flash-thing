@@ -173,7 +173,7 @@ seconds."
 
 (defun flash-thing--remove-advice ()
   "Remove advice from the commands supported by `flash-thing'."
-  (mapc #'flash-thing--remove-advice-from-file flash-commands))
+  (mapc #'flash-thing--remove-advice-from-file flash-thing-commands))
 
 ;;;###autoload
 (define-minor-mode flash-thing-mode
